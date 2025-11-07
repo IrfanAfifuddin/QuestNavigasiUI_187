@@ -6,5 +6,8 @@ import androidx.compose.runtime.Composable
 @OptIn(markerClass = ExperimentalMaterial3Api::class)
 @Composable
 fun FormIsian(
+    jenisK:List<String> = listOf("Laki-laki", "Perempuan"),
+    OnSumbitBtnCLick : () -> Unit
+){
 
-)
+}
