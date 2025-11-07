@@ -1,10 +1,10 @@
 package com.example.navigasi.view
 
+import android.R.attr.fontWeight
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,43 +22,52 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.navigasi.R
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.RadioButton
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
-@OptIn(markerClass = ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormIsian(
-    jenisK:List<String> = listOf("Laki-laki", "Perempuan"),
-    OnSumbitBtnCLick : () -> Unit
-){
-    Scaffold(modifier = Modifier,
+    jenisK: List<String> = listOf("Laki-laki", "Perempuan"),
+    OnSubmitBtnCLick: () -> Unit
+) {
+    Scaffold(
+        modifier = Modifier,
         topBar = {
-        TopAppBar(
-            title = { Text(text = stringResource(id = R.string.home), color = Color.White )},
-            colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource(id = R.color.teal_700))
-        ) }
-    ){ isiRuang ->
-        Column(modifier = Modifier.padding(paddingValues = isiRuang),
+            TopAppBar(
+                title = { Text(text = stringResource( R.string.home), color = Color.White) },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = colorResource( R.color.teal_700))
+            )
+        }
+    ) { isiRuang ->
+        Column(
+            modifier = Modifier.padding(paddingValues = isiRuang),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             OutlinedTextField(
                 value = " ",
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .width(width = 250.dp),
-                label = {Text(text = "Nama Lengkap")},
+                    .width( 250.dp),
+                label = { Text( "Nama Lengkap") },
                 onValueChange = {},
             )
-            HorizontalDivider(modifier = Modifier
-                .padding(all = 20.dp)
-                .width(width = 250.dp), thickness = Thickness, color = Color.Red)
-            Row{
-                jenisK.forEach {
-                        item->
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding( 20.dp)
+                    .width( 250.dp), thickness = Thickness, color = Color.Red
+            )
+            Row {
+                jenisK.forEach { item ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(
                             selected = false,
@@ -68,9 +77,10 @@ fun FormIsian(
                     }
                 }
             }
-            HorizontalDivider(modifier = Modifier
-                .padding(all = 20.dp)
-                .width(width = 250.dp),
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding( 20.dp)
+                    .width( 250.dp),
                 thickness = 1.dp,
                 color = Color.Red
             )
@@ -79,16 +89,71 @@ fun FormIsian(
                 singleLine = true,
                 modifier = Modifier
                     .width(width = 250.dp),
-                label = {Text(text = "Alamat")},
+                label = { Text( "Alamat") },
                 onValueChange = {},
             )
             Spacer(modifier = Modifier.height(height = 30.dp))
             Button(
-                modifier = Modifier.fillMaxWidth(fraction = 1f)
-                    .padding(all = 25.dp),
-                onClick = OnSumbitBtnCLick
-            ){
+                modifier = Modifier
+                    .fillMaxWidth(fraction = 1f)
+                    .padding( 25.dp),
+                onClick = OnSubmitBtnCLick
+            ) {
                 Text(text = stringResource(id = R.string.submit))
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TampilData(
+    onBackBtnCLick:()-> Unit
+){
+    val items = listOf(
+        Pair(stringResource(id = R.string.nama_lengkap), "Contoh Nama"),
+        Pair(stringResource(id = R.string.jenis_kelamin), "Contoh Lainnya"),
+        Pair(stringResource(id = R.string.alamat), "Contoh Yogyakarta")
+    )
+
+    Scaffold(
+        modifier = Modifier,
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(id = R.string.tampil), color = Color.White) },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = colorResource(id = R.color.teal_700)
+                )
+            )
+        }
+    ) { isiRuang ->
+        Column(
+            modifier = Modifier.padding(paddingValues = isiRuang),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(
+                modifier = Modifier.padding(all = dimensionResource(id = R.dimen.padding_medium)),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items.forEach { item ->
+                    Column {
+                        Text(text = item.first.uppercase(), fontSize = 16.sp)
+                        Text(
+                            text = item.second,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Cursive,
+                            fontSize = 22.sp
+                        )
+                    }
+                    HorizontalDivider(thickness = 1.dp, color = Color.Cyan)
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onBackBtnCLick
+                ) {
+                    Text(text = stringResource(id = R.string.back))
+                }
             }
         }
     }
